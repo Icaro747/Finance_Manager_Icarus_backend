@@ -12,8 +12,10 @@ namespace Finance_Manager_Icarus.Controllers;
 public class UsuarioController : CrudController<
     Usuario, UsuarioRepository, CriarUsuarioDto, AtualizarUsuarioDto, ListarUsuarioDto>
 {
-    public UsuarioController(UsuarioRepository repository, IMapper mapper) 
-    : base(repository, mapper)
+    public UsuarioController(
+        UsuarioRepository repository,
+        IMapper mapper
+    ) : base(repository, mapper, repository)
     { }
 
     protected override Guid GetEntityId(Usuario entity)

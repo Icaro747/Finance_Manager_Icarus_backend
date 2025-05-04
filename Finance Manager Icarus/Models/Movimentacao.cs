@@ -16,6 +16,20 @@ public class Movimentacao : EntidadeBase
     public Guid? Banco_Id { get; set; }
     public virtual Banco? Banco { get; set; }
 
-    public Guid NomeMovimentacao_Id { get; set; }
+    public Guid Nome_movimentacao_Id { get; set; }
     public virtual required NomeMovimentacao NomeMovimentacao { get; set; }
+
+    public Guid Tipo_movimentacao_Id { get; set; }
+    public virtual required TipoMovimentacao TipoMovimentacao { get; set; }
+
+    /// <summary>
+    /// Verifica se a movimentação possui uma fonte válida de origem.
+    /// Uma movimentação é considerada com fonte válida quando está associada a um cartão ou a um banco.
+    /// Retorna true se pelo menos um dos dois estiver definido (com um Guid diferente de Guid.Empty).
+    /// </summary>
+    public bool PossuiFonteValida()
+    {
+        return (Cartao_Id.HasValue && Cartao_Id != Guid.Empty) ||
+               (Banco_Id.HasValue && Banco_Id != Guid.Empty);
+    }
 }

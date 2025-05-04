@@ -11,7 +11,7 @@ public class NomeMovimentacao : EntidadeBase
     public virtual Categoria? Categoria { get; set; }
 
     public Guid Usuario_Id { get; set; }
-    public virtual required Usuario Usuario { get; set; }
+    public virtual Usuario? Usuario { get; set; }
 
     public ICollection<Movimentacao>? Movimentacoes { get; set; }
 }

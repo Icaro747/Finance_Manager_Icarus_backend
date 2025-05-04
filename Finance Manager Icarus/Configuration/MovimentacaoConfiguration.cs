@@ -24,6 +24,10 @@ public class MovimentacaoConfiguration : IEntityTypeConfiguration<Movimentacao>
 
         builder.HasOne(x => x.NomeMovimentacao)
             .WithMany(x => x.Movimentacoes)
-            .HasForeignKey(x => x.NomeMovimentacao_Id);
+            .HasForeignKey(x => x.Nome_movimentacao_Id);
+
+        builder.HasOne(x => x.TipoMovimentacao)
+            .WithMany(x => x.Movimentacoes)
+            .HasForeignKey(x => x.Tipo_movimentacao_Id);
     }
 }

@@ -15,4 +15,9 @@ public class NomeMovimentacaoRepository : CrudRepository<NomeMovimentacao>
     /// <param name="context">Contexto do banco de dados.</param>
     public NomeMovimentacaoRepository(FinanceManagerIcarusContext context) : base(context)
     { }
+
+    public NomeMovimentacao? GetByNomeAndUsuarioId(string nome, Guid usuario_id)
+    {
+        return _dbSet.FirstOrDefault(nm => nm.Nome == nome && nm.Usuario_Id == usuario_id);
+    }
 }

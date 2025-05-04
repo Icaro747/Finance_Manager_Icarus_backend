@@ -9,6 +9,7 @@ public class CartaoConfiguration : IEntityTypeConfiguration<Cartao>
     public void Configure(EntityTypeBuilder<Cartao> builder)
     {
         builder.HasKey(e => e.Cartao_Id);
+        builder.Property(e => e.Nome).IsRequired();
         builder.Property(e => e.Numero).IsRequired();
 
         builder.HasOne(x => x.Banco)

@@ -16,6 +16,7 @@ public class FinanceManagerIcarusContext : DbContext
     public DbSet<Categoria> categoria { get; set; }
     public DbSet<Movimentacao> movimentacao { get; set; }
     public DbSet<NomeMovimentacao> nome_movimentacao { get; set; }
+    public DbSet<TipoMovimentacao> tipo_movimentacao { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,6 +26,7 @@ public class FinanceManagerIcarusContext : DbContext
         modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
         modelBuilder.ApplyConfiguration(new MovimentacaoConfiguration());
         modelBuilder.ApplyConfiguration(new NomeMovimentacaoConfiguration());
+        modelBuilder.ApplyConfiguration(new TipoMovimentacaoConfiguration());
 
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {

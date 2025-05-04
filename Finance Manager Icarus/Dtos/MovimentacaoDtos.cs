@@ -21,6 +21,10 @@
         public decimal Valor { get; set; }
         public string? Descricao { get; set; }
         public bool Entrada { get; set; }
+        public Guid? Cartao_Id { get; set; }
+        public Guid? Banco_Id { get; set; }
+        public required string NomeMovimentacao { get; set; }
+        public required string TipoMovimentacao { get; set; }
     }
 
     /// <summary>

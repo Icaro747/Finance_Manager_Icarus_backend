@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Finance_Manager_Icarus.Repositories;
 using Finance_Manager_Icarus.Repositories.Base;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,7 @@ namespace Finance_Manager_Icarus.Controllers.Base;
 /// <typeparam name="TReadDto">O tipo do DTO usado para leitura/listagem.</typeparam>
 [ApiController]
 [Route("[controller]")]
-public abstract class CrudController<TEntity, TRepository, TCreateDto, TUpdateDto, TReadDto> : ControllerBase
+public abstract class CrudController<TEntity, TRepository, TCreateDto, TUpdateDto, TReadDto> : ControllerFinanceManagerIcarusData
     where TEntity : class
     where TRepository : CrudRepository<TEntity>
     where TCreateDto : class
@@ -29,7 +30,11 @@ public abstract class CrudController<TEntity, TRepository, TCreateDto, TUpdateDt
     /// </summary>
     /// <param name="repository">O repositório a ser utilizado para operações CRUD.</param>
     /// <param name="mapper">O AutoMapper para conversão entre entidades e DTOs.</param>
-    protected CrudController(TRepository repository, IMapper mapper)
+    protected CrudController(
+        TRepository repository,
+        IMapper mapper,
+        UsuarioRepository usuarioRepository
+    ) : base(usuarioRepository)
     {
         _repository = repository;
         _mapper = mapper;
@@ -83,7 +88,7 @@ public abstract class CrudController<TEntity, TRepository, TCreateDto, TUpdateDt
     /// <param name="createDto">O DTO contendo os dados para criação.</param>
     /// <returns>O resultado da operação incluindo o DTO representando a entidade criada.</returns>
     [HttpPost]
-    public virtual async Task<ActionResult<TReadDto>> Create([FromBody] TCreateDto createDto)
+    public virtual async Task<IActionResult> Create([FromBody] TCreateDto createDto)
     {
         try
         {

@@ -12,6 +12,7 @@ public class Usuario : EntidadeBase
     public ICollection<Banco>? Bancos { get; set; }
     public ICollection<Categoria>? Categorias { get; set; }
     public ICollection<NomeMovimentacao>? NomeMovimentacoes { get; set; }
+    public ICollection<TipoMovimentacao>? TipoMovimentacoes { get; set; }
 
     public void HashPassword(string password)
     {

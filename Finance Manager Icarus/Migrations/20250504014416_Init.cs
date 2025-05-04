@@ -80,10 +80,34 @@ namespace Finance_Manager_Icarus.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "tipo_movimentacao",
+                columns: table => new
+                {
+                    Tipo_movimentacao_id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Nome = table.Column<string>(type: "longtext", nullable: false),
+                    Usuario_Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    data_criacao = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
+                    data_atualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    data_exclusao = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tipo_movimentacao", x => x.Tipo_movimentacao_id);
+                    table.ForeignKey(
+                        name: "FK_tipo_movimentacao_usuario_Usuario_Id",
+                        column: x => x.Usuario_Id,
+                        principalTable: "usuario",
+                        principalColumn: "Usuario_Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "cartao",
                 columns: table => new
                 {
                     Cartao_Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Nome = table.Column<string>(type: "longtext", nullable: false),
                     Numero = table.Column<string>(type: "longtext", nullable: false),
                     Banco_Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     data_criacao = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
@@ -142,7 +166,8 @@ namespace Finance_Manager_Icarus.Migrations
                     Entrada = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Cartao_Id = table.Column<Guid>(type: "char(36)", nullable: true),
                     Banco_Id = table.Column<Guid>(type: "char(36)", nullable: true),
-                    NomeMovimentacao_Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Nome_movimentacao_Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Tipo_movimentacao_Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     data_criacao = table.Column<DateTime>(type: "datetime(6)", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
                     data_atualizacao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     data_exclusao = table.Column<DateTime>(type: "datetime(6)", nullable: true)
@@ -161,10 +186,16 @@ namespace Finance_Manager_Icarus.Migrations
                         principalTable: "cartao",
                         principalColumn: "Cartao_Id");
                     table.ForeignKey(
-                        name: "FK_movimentacao_nome_movimentacao_Movimentacao_Id",
-                        column: x => x.Movimentacao_Id,
+                        name: "FK_movimentacao_nome_movimentacao_Nome_movimentacao_Id",
+                        column: x => x.Nome_movimentacao_Id,
                         principalTable: "nome_movimentacao",
                         principalColumn: "Nome_movimentacao_id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_movimentacao_tipo_movimentacao_Tipo_movimentacao_Id",
+                        column: x => x.Tipo_movimentacao_Id,
+                        principalTable: "tipo_movimentacao",
+                        principalColumn: "Tipo_movimentacao_id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
@@ -195,6 +226,16 @@ namespace Finance_Manager_Icarus.Migrations
                 column: "Cartao_Id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_movimentacao_Nome_movimentacao_Id",
+                table: "movimentacao",
+                column: "Nome_movimentacao_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_movimentacao_Tipo_movimentacao_Id",
+                table: "movimentacao",
+                column: "Tipo_movimentacao_Id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_nome_movimentacao_Categoria_Id",
                 table: "nome_movimentacao",
                 column: "Categoria_Id");
@@ -202,6 +243,11 @@ namespace Finance_Manager_Icarus.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_nome_movimentacao_Usuario_Id",
                 table: "nome_movimentacao",
+                column: "Usuario_Id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tipo_movimentacao_Usuario_Id",
+                table: "tipo_movimentacao",
                 column: "Usuario_Id");
         }
 
@@ -216,6 +262,9 @@ namespace Finance_Manager_Icarus.Migrations
 
             migrationBuilder.DropTable(
                 name: "nome_movimentacao");
+
+            migrationBuilder.DropTable(
+                name: "tipo_movimentacao");
 
             migrationBuilder.DropTable(
                 name: "banco");

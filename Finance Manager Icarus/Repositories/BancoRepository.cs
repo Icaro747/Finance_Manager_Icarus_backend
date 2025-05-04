@@ -15,4 +15,11 @@ public class BancoRepository : CrudRepository<Banco>
     /// <param name="context">Contexto do banco de dados.</param>
     public BancoRepository(FinanceManagerIcarusContext context) : base(context)
     { }
+
+    public List<Banco> GetByUsuarioId(Guid usuario_id)
+    {
+        return _dbSet
+            .Where(x => x.Usuario_Id == usuario_id)
+            .ToList();
+    }
 }
