@@ -77,6 +77,46 @@ public class MovimentacaoController : CrudController<
         }
     }
 
+    [Authorize, HttpGet("ByNome")]
+    public IActionResult GetMyMovimentacao([FromQuery] Guid nome_id)
+    {
+        try
+        {
+            var user = GetFromCurrentUser();
+            if (user == null)
+                return Unauthorized("Usuário não encontrado.");
+
+            var lista = _movimentacaoRepository.GetByNomeIdAndUsuarioId(nome_id, user.Usuario_Id);
+            var dto = _mapper.Map<List<ListarMovimentacaoDto>>(lista);
+
+            return Ok(dto);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest("Erro interno: " + ex);
+        }
+    }
+
+    [Authorize, HttpGet("My")]
+    public IActionResult GetMyMovimentacao()
+    {
+        try
+        {
+            var user = GetFromCurrentUser();
+            if (user == null)
+                return Unauthorized("Usuário não encontrado.");
+
+            var lista = _movimentacaoRepository.GetByUsuarioId(user.Usuario_Id);
+            var dto = _mapper.Map<List<ListarMovimentacaoAllDataDto>>(lista);
+
+            return Ok(dto);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest("Erro interno: " + ex);
+        }
+    }
+
     protected override Guid GetEntityId(Movimentacao entity)
     {
         return entity.Movimentacao_Id;

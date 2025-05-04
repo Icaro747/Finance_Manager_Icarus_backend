@@ -42,21 +42,22 @@ public class GraficoController : ControllerFinanceManagerIcarusData
                 return Unauthorized("Usuário não encontrado.");
 
             // 1. Buscar movimentações do usuário no intervalo
-            var movimentacoes = _movimentacaoRepository.GetByUsuarioIdAndFilterByRangeData(user.Usuario_Id, date1, date2);
+            var movimentacoes = _movimentacaoRepository
+                .GetByUsuarioIdAndFilterByRangeData(user.Usuario_Id, date1, date2);
 
             if (!movimentacoes.Any())
                 return Ok(new { message = "Nenhuma movimentação encontrada." });
 
-            // 2. Agrupar por NomeMovimentacao e data (dia)
+            // 2. Agrupar por Categoria (ou "não classificado") e data (dia)
             var agrupado = movimentacoes
                 .GroupBy(m => new
                 {
-                    Nome = m.NomeMovimentacao.Nome,
-                    Data = m.Data.Date // Agrupar por dia. Pode usar mês se quiser.
+                    Categoria = m.NomeMovimentacao.Categoria?.Nome ?? "não classificado",
+                    Data = m.Data.Date
                 })
                 .Select(g => new
                 {
-                    g.Key.Nome,
+                    Nome = g.Key.Categoria,
                     g.Key.Data,
                     Valor = g.Sum(m => m.Valor)
                 })
@@ -83,6 +84,18 @@ public class GraficoController : ControllerFinanceManagerIcarusData
                 })
                 .ToList();
 
+            // 4.1 Adiciona linha com soma total de todas as categorias por dia
+            var totalPorDia = datas.Select(data =>
+                agrupado.Where(x => x.Data == data).Sum(x => x.Valor)
+            ).ToList();
+
+            datasets.Add(new DatasetDto
+            {
+                Name = "Total",
+                Data = totalPorDia,
+                Type = "line"
+            });
+
             // 5. Montar DTO para retornar
             // Monta o DTO do gráfico
             var graficoDto = new GraficoDto
@@ -97,6 +110,104 @@ public class GraficoController : ControllerFinanceManagerIcarusData
         catch (Exception ex)
         {
             return BadRequest("Erro interno: " + ex);
+        }
+    }
+
+    [Authorize, HttpGet("Pizza/ByRangeData")]
+    public IActionResult GetPizzaByRangeData([FromQuery] DateTime date1, DateTime date2)
+    {
+        try
+        {
+            var user = GetFromCurrentUser();
+            if (user == null)
+                return Unauthorized("Usuário não encontrado.");
+
+            // 1. Buscar movimentações do usuário no intervalo
+            var movimentacoes = _movimentacaoRepository
+                .GetByUsuarioIdAndFilterByRangeData(user.Usuario_Id, date1, date2);
+
+            if (!movimentacoes.Any())
+                return Ok(new { message = "Nenhuma movimentação encontrada." });
+
+            // 2. Agrupar por Categoria (ou "não classificado") e somar os valores
+            var agrupado = movimentacoes
+                .GroupBy(m => m.NomeMovimentacao.Categoria?.Nome ?? "não classificado")
+                .Select(g => new
+                {
+                    Nome = g.Key,
+                    Valor = g.Sum(m => m.Valor)
+                })
+                .ToList();
+
+            // 3. Montar o DTO
+            var graficoDto = new GraficoDto
+            {
+                Type = "pie",
+                Labels = agrupado.Select(g => g.Nome).ToList(),
+                Datasets = new List<DatasetDto>
+            {
+                new DatasetDto
+                {
+                    Name = "", // Gráfico de pizza não precisa de nome
+                    Data = agrupado.Select(g => g.Valor).ToList()
+                }
+            }
+            };
+
+            return Ok(graficoDto);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest("Erro interno: " + ex.Message);
+        }
+    }
+
+    [Authorize, HttpGet("Pizza/ByRangeDataAndByTipoGasto")]
+    public IActionResult GetPizzaByRangeDataByTipoGasto([FromQuery] DateTime date1, DateTime date2, string tipo)
+    {
+        try
+        {
+            var user = GetFromCurrentUser();
+            if (user == null)
+                return Unauthorized("Usuário não encontrado.");
+
+            // 1. Buscar movimentações do usuário no intervalo
+            var movimentacoes = _movimentacaoRepository
+                .GetByUsuarioIdAndFilterByRangeData(user.Usuario_Id, date1, date2, tipo);
+
+            if (!movimentacoes.Any())
+                return Ok(new { message = "Nenhuma movimentação encontrada." });
+
+            // 2. Agrupar por Categoria (ou "não classificado") e somar os valores
+            var agrupado = movimentacoes
+                .GroupBy(m => m.NomeMovimentacao.Categoria?.Nome ?? "não classificado")
+                .Select(g => new
+                {
+                    Nome = g.Key,
+                    Valor = g.Sum(m => m.Valor)
+                })
+                .ToList();
+
+            // 3. Montar o DTO
+            var graficoDto = new GraficoDto
+            {
+                Type = "pie",
+                Labels = agrupado.Select(g => g.Nome).ToList(),
+                Datasets = new List<DatasetDto>
+            {
+                new DatasetDto
+                {
+                    Name = "", // Gráfico de pizza não precisa de nome
+                    Data = agrupado.Select(g => g.Valor).ToList()
+                }
+            }
+            };
+
+            return Ok(graficoDto);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest("Erro interno: " + ex.Message);
         }
     }
 }

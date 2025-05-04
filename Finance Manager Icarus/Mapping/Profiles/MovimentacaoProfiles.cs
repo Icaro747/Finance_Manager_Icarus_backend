@@ -13,5 +13,6 @@ public class MovimentacaoProfiles : Profile
             .ForMember(dest => dest.TipoMovimentacao, opt => opt.Ignore());
         CreateMap<AtualizarMovimentacaoDto, Movimentacao>();
         CreateMap<Movimentacao, ListarMovimentacaoDto>();
+        CreateMap<Movimentacao, ListarMovimentacaoAllDataDto>();
     }
 }

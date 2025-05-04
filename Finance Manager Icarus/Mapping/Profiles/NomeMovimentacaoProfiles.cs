@@ -11,5 +11,6 @@ public class NomeMovimentacaoProfiles : Profile
         CreateMap<CriarNomeMovimentacaoDto, NomeMovimentacao>();
         CreateMap<AtualizarNomeMovimentacaoDto, NomeMovimentacao>();
         CreateMap<NomeMovimentacao, ListarNomeMovimentacaoDto>();
+        CreateMap<NomeMovimentacao, ListarNomeMovimentacaoAllDataDto>();
     }
 }

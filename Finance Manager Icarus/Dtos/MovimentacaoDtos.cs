@@ -38,4 +38,15 @@
         public string? Descricao { get; set; }
         public bool Entrada { get; set; }
     }
+
+    public class ListarMovimentacaoAllDataDto
+    {
+        public Guid Movimentacao_id { get; set; }
+        public DateTime Data { get; set; }
+        public decimal Valor { get; set; }
+        public string? Descricao { get; set; }
+        public bool Entrada { get; set; }
+        public required ListarNomeMovimentacaoAllDataDto NomeMovimentacao { get; set; }
+        public required ListarTipoMovimentacaoDto TipoMovimentacao { get; set; }
+    }
 }

@@ -15,4 +15,9 @@ public class CategoriaRepository : CrudRepository<Categoria>
     /// <param name="context">Contexto do banco de dados.</param>
     public CategoriaRepository(FinanceManagerIcarusContext context) : base(context)
     { }
+
+    public List<Categoria> GetByUsuarioId(Guid usuario_id)
+    {
+        return _dbSet.Where(x => x.Usuario_Id == usuario_id).ToList();
+    }
 }
