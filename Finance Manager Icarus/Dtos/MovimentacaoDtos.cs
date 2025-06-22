@@ -5,7 +5,7 @@
     /// </summary>
     public class AtualizarMovimentacaoDto
     {
-        public Guid Movimentacao_id { get; set; }
+        public Guid Movimentacao_Id { get; set; }
         public DateTime Data { get; set; }
         public decimal Valor { get; set; }
         public string? Descricao { get; set; }
@@ -32,7 +32,7 @@
     /// </summary>
     public class ListarMovimentacaoDto
     {
-        public Guid Movimentacao_id { get; set; }
+        public Guid Movimentacao_Id { get; set; }
         public DateTime Data { get; set; }
         public decimal Valor { get; set; }
         public string? Descricao { get; set; }
@@ -41,7 +41,7 @@
 
     public class ListarMovimentacaoAllDataDto
     {
-        public Guid Movimentacao_id { get; set; }
+        public Guid Movimentacao_Id { get; set; }
         public DateTime Data { get; set; }
         public decimal Valor { get; set; }
         public string? Descricao { get; set; }

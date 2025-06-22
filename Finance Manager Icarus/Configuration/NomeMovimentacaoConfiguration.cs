@@ -8,7 +8,7 @@ public class NomeMovimentacaoConfiguration : IEntityTypeConfiguration<NomeMovime
 {
     public void Configure(EntityTypeBuilder<NomeMovimentacao> builder)
     {
-        builder.HasKey(e => e.Nome_movimentacao_id);
+        builder.HasKey(e => e.Nome_Movimentacao_Id);
         builder.Property(e => e.Nome).IsRequired();
 
         builder.HasOne(x => x.Usuario)

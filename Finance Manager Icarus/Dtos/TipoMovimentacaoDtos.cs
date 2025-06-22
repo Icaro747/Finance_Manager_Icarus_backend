@@ -5,7 +5,7 @@
     /// </summary>
     public class AtualizarTipoMovimentacaoDto
     {
-        public Guid Tipo_movimentacao_id { get; set; }
+        public Guid Tipo_Movimentacao_Id { get; set; }
         public required string Nome { get; set; }
     }
 
@@ -22,7 +22,7 @@
     /// </summary>
     public class ListarTipoMovimentacaoDto
     {
-        public Guid tipo_movimentacao_id { get; set; }
+        public Guid Tipo_Movimentacao_Id { get; set; }
         public required string Nome { get; set; }
     }
 }

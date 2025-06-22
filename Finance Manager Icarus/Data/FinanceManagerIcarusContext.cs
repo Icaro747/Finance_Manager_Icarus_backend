@@ -10,21 +10,25 @@ public class FinanceManagerIcarusContext : DbContext
     public FinanceManagerIcarusContext(DbContextOptions<FinanceManagerIcarusContext> options) : base(options)
     { }
 
-    public DbSet<Usuario> usuario { get; set; }
-    public DbSet<Banco> banco { get; set; }
-    public DbSet<Cartao> cartao { get; set; }
-    public DbSet<Categoria> categoria { get; set; }
-    public DbSet<Movimentacao> movimentacao { get; set; }
-    public DbSet<NomeMovimentacao> nome_movimentacao { get; set; }
-    public DbSet<TipoMovimentacao> tipo_movimentacao { get; set; }
+    public DbSet<Banco> Banco { get; set; }
+    public DbSet<Cartao> Cartao { get; set; }
+    public DbSet<Usuario> Usuario { get; set; }
+    public DbSet<Categoria> Categoria { get; set; }
+    public DbSet<Mapeamento> Mapeamento { get; set; }
+    public DbSet<Movimentacao> Movimentacao { get; set; }
+    public DbSet<ItensMapeamento> Itens_Mapeamento { get; set; }
+    public DbSet<NomeMovimentacao> Nome_Movimentacao { get; set; }
+    public DbSet<TipoMovimentacao> Tipo_Movimentacao { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
         modelBuilder.ApplyConfiguration(new BancoConfiguration());
         modelBuilder.ApplyConfiguration(new CartaoConfiguration());
+        modelBuilder.ApplyConfiguration(new UsuarioConfiguration());
         modelBuilder.ApplyConfiguration(new CategoriaConfiguration());
+        modelBuilder.ApplyConfiguration(new MapeamentoConfiguration());
         modelBuilder.ApplyConfiguration(new MovimentacaoConfiguration());
+        modelBuilder.ApplyConfiguration(new ItensMapeamentoConfiguration());
         modelBuilder.ApplyConfiguration(new NomeMovimentacaoConfiguration());
         modelBuilder.ApplyConfiguration(new TipoMovimentacaoConfiguration());
 

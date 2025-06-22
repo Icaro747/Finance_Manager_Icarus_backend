@@ -5,7 +5,7 @@
     /// </summary>
     public class AtualizarCategoriaDto
     {
-        public Guid Categoria_id { get; set; }
+        public Guid Categoria_Id { get; set; }
         public required string Nome { get; set; }
     }
 
@@ -22,7 +22,7 @@
     /// </summary>
     public class ListarCategoriaDto
     {
-        public Guid Categoria_id { get; set; }
+        public Guid Categoria_Id { get; set; }
         public required string Nome { get; set; }
     }
 }

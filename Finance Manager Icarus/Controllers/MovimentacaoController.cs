@@ -48,6 +48,7 @@ public class MovimentacaoController : CrudController<
                 return UnprocessableEntity("É necessário informar pelo menos um dos IDs: Cartao_Id ou Banco_Id.");
 
             var tm = _tipoMovimentacaoRepository.GetByNomeAndUsuarioId(createDto.TipoMovimentacao, user.Usuario_Id);
+            var istm = tm != null;
             tm ??= new TipoMovimentacao
             { 
                     Nome = createDto.TipoMovimentacao,
@@ -57,6 +58,7 @@ public class MovimentacaoController : CrudController<
             movimentacao.TipoMovimentacao = tm;
 
             var nm = _nomeMovimentacaoRepository.GetByNomeAndUsuarioId(createDto.NomeMovimentacao, user.Usuario_Id);
+            var isnm = nm != null;
             nm ??= new NomeMovimentacao
             { 
                 Nome = createDto.NomeMovimentacao,
@@ -64,6 +66,12 @@ public class MovimentacaoController : CrudController<
             };
 
             movimentacao.NomeMovimentacao = nm;
+
+            if(isnm && istm)
+            {
+                var ism = _movimentacaoRepository.GetVerificaoMovimentacao(movimentacao);
+                if (ism != null) return Conflict("esse item ja existe");
+            }
 
             _movimentacaoRepository.Add(movimentacao);
             await _movimentacaoRepository.SaveAllAsync();

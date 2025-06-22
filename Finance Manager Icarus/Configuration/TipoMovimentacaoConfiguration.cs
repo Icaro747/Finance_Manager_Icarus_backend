@@ -8,7 +8,7 @@ public class TipoMovimentacaoConfiguration : IEntityTypeConfiguration<TipoMovime
 {
     public void Configure(EntityTypeBuilder<TipoMovimentacao> builder)
     {
-        builder.HasKey(e => e.Tipo_movimentacao_id);
+        builder.HasKey(e => e.Tipo_Movimentacao_Id);
         builder.Property(e => e.Nome).IsRequired();
 
         builder.HasOne(x => x.Usuario)

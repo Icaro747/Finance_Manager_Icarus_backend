@@ -13,6 +13,7 @@ public class Usuario : EntidadeBase
     public ICollection<Categoria>? Categorias { get; set; }
     public ICollection<NomeMovimentacao>? NomeMovimentacoes { get; set; }
     public ICollection<TipoMovimentacao>? TipoMovimentacoes { get; set; }
+    public ICollection<Mapeamento>? Mapeamentos { get; set; }
 
     public void HashPassword(string password)
     {

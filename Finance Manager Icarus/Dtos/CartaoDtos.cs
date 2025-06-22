@@ -5,7 +5,7 @@
     /// </summary>
     public class AtualizarCartaoDto
     {
-        public Guid Cartao_id { get; set; }
+        public Guid Cartao_Id { get; set; }
         public required string Nome { get; set; }
         public required string Numero { get; set; }
     }
@@ -25,7 +25,7 @@
     /// </summary>
     public class ListarCartaoDto
     {
-        public Guid Cartao_id { get; set; }
+        public Guid Cartao_Id { get; set; }
         public required string Nome { get; set; }
         public required string Numero { get; set; }
     }

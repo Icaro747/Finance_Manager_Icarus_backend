@@ -5,7 +5,7 @@
     /// </summary>
     public class AtualizarNomeMovimentacaoDto
     {
-        public Guid Nome_movimentacao_id { get; set; }
+        public Guid Nome_Movimentacao_Id { get; set; }
         public Guid? Categoria_Id { get; set; }
         public required string Nome { get; set; }
     }
@@ -23,7 +23,7 @@
     /// </summary>
     public class ListarNomeMovimentacaoDto
     {
-        public Guid Nome_movimentacao_id { get; set; }
+        public Guid Nome_Movimentacao_Id { get; set; }
         public required string Nome { get; set; }
     }
 

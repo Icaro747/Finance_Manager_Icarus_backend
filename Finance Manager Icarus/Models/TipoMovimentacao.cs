@@ -10,7 +10,7 @@ public class TipoMovimentacao : EntidadeBase
     /// <summary>
     /// Identificador único da entidade TipoMovimentacao.
     /// </summary>
-    public Guid Tipo_movimentacao_id { get; set; }
+    public Guid Tipo_Movimentacao_Id { get; set; }
 
     /// <summary>
     /// Representa o campo Nome do tipo string.

@@ -5,7 +5,7 @@
     /// </summary>
     public class AtualizarBancoDto
     {
-        public Guid Banco_id { get; set; }
+        public Guid Banco_Id { get; set; }
         public required string Nome { get; set; }
         public required string Numero { get; set; }
     }
@@ -24,7 +24,7 @@
     /// </summary>
     public class ListarBancoDto
     {
-        public Guid Banco_id { get; set; }
+        public Guid Banco_Id { get; set; }
         public required string Nome { get; set; }
         public required string Numero { get; set; }
     }

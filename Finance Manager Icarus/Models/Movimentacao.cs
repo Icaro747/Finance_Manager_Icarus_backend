@@ -16,10 +16,10 @@ public class Movimentacao : EntidadeBase
     public Guid? Banco_Id { get; set; }
     public virtual Banco? Banco { get; set; }
 
-    public Guid Nome_movimentacao_Id { get; set; }
+    public Guid Nome_Movimentacao_Id { get; set; }
     public virtual required NomeMovimentacao NomeMovimentacao { get; set; }
 
-    public Guid Tipo_movimentacao_Id { get; set; }
+    public Guid Tipo_Movimentacao_Id { get; set; }
     public virtual required TipoMovimentacao TipoMovimentacao { get; set; }
 
     /// <summary>

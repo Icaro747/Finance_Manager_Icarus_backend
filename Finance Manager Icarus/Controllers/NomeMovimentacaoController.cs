@@ -50,11 +50,11 @@ public class NomeMovimentacaoController : CrudController<
 
     protected override Guid GetEntityId(NomeMovimentacao entity)
     {
-        return entity.Nome_movimentacao_id;
+        return entity.Nome_Movimentacao_Id;
     }
 
     protected override void SetEntityId(NomeMovimentacao entity, Guid id)
     {
-        entity.Nome_movimentacao_id = id;
+        entity.Nome_Movimentacao_Id = id;
     }
 }

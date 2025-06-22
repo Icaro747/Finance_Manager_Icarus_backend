@@ -51,7 +51,7 @@ namespace Finance_Manager_Icarus.Migrations
 
                     b.HasIndex("Usuario_Id");
 
-                    b.ToTable("banco");
+                    b.ToTable("Banco");
                 });
 
             modelBuilder.Entity("Finance_Manager_Icarus.Models.Cartao", b =>
@@ -86,7 +86,7 @@ namespace Finance_Manager_Icarus.Migrations
 
                     b.HasIndex("Banco_Id");
 
-                    b.ToTable("cartao");
+                    b.ToTable("Cartao");
                 });
 
             modelBuilder.Entity("Finance_Manager_Icarus.Models.Categoria", b =>
@@ -117,7 +117,73 @@ namespace Finance_Manager_Icarus.Migrations
 
                     b.HasIndex("Usuario_Id");
 
-                    b.ToTable("categoria");
+                    b.ToTable("Categoria");
+                });
+
+            modelBuilder.Entity("Finance_Manager_Icarus.Models.ItensMapeamento", b =>
+                {
+                    b.Property<Guid>("Itens_Mapeamento_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Campo_Destino")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Campo_Origem")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("Mapeamento_Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime?>("data_atualizacao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("data_criacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+
+                    b.Property<DateTime?>("data_exclusao")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Itens_Mapeamento_Id");
+
+                    b.HasIndex("Mapeamento_Id");
+
+                    b.ToTable("Itens_Mapeamento");
+                });
+
+            modelBuilder.Entity("Finance_Manager_Icarus.Models.Mapeamento", b =>
+                {
+                    b.Property<Guid>("Mapeamento_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("Usuario_Id")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime?>("data_atualizacao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("data_criacao")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+
+                    b.Property<DateTime?>("data_exclusao")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Mapeamento_Id");
+
+                    b.HasIndex("Usuario_Id");
+
+                    b.ToTable("Mapeamento");
                 });
 
             modelBuilder.Entity("Finance_Manager_Icarus.Models.Movimentacao", b =>
@@ -141,10 +207,10 @@ namespace Finance_Manager_Icarus.Migrations
                     b.Property<bool>("Entrada")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<Guid>("Nome_movimentacao_Id")
+                    b.Property<Guid>("Nome_Movimentacao_Id")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("Tipo_movimentacao_Id")
+                    b.Property<Guid>("Tipo_Movimentacao_Id")
                         .HasColumnType("char(36)");
 
                     b.Property<decimal>("Valor")
@@ -167,16 +233,16 @@ namespace Finance_Manager_Icarus.Migrations
 
                     b.HasIndex("Cartao_Id");
 
-                    b.HasIndex("Nome_movimentacao_Id");
+                    b.HasIndex("Nome_Movimentacao_Id");
 
-                    b.HasIndex("Tipo_movimentacao_Id");
+                    b.HasIndex("Tipo_Movimentacao_Id");
 
-                    b.ToTable("movimentacao");
+                    b.ToTable("Movimentacao");
                 });
 
             modelBuilder.Entity("Finance_Manager_Icarus.Models.NomeMovimentacao", b =>
                 {
-                    b.Property<Guid>("Nome_movimentacao_id")
+                    b.Property<Guid>("Nome_Movimentacao_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -201,18 +267,18 @@ namespace Finance_Manager_Icarus.Migrations
                     b.Property<DateTime?>("data_exclusao")
                         .HasColumnType("datetime(6)");
 
-                    b.HasKey("Nome_movimentacao_id");
+                    b.HasKey("Nome_Movimentacao_Id");
 
                     b.HasIndex("Categoria_Id");
 
                     b.HasIndex("Usuario_Id");
 
-                    b.ToTable("nome_movimentacao");
+                    b.ToTable("Nome_Movimentacao");
                 });
 
             modelBuilder.Entity("Finance_Manager_Icarus.Models.TipoMovimentacao", b =>
                 {
-                    b.Property<Guid>("Tipo_movimentacao_id")
+                    b.Property<Guid>("Tipo_Movimentacao_Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
@@ -234,11 +300,11 @@ namespace Finance_Manager_Icarus.Migrations
                     b.Property<DateTime?>("data_exclusao")
                         .HasColumnType("datetime(6)");
 
-                    b.HasKey("Tipo_movimentacao_id");
+                    b.HasKey("Tipo_Movimentacao_Id");
 
                     b.HasIndex("Usuario_Id");
 
-                    b.ToTable("tipo_movimentacao");
+                    b.ToTable("Tipo_Movimentacao");
                 });
 
             modelBuilder.Entity("Finance_Manager_Icarus.Models.Usuario", b =>
@@ -272,7 +338,7 @@ namespace Finance_Manager_Icarus.Migrations
 
                     b.HasKey("Usuario_Id");
 
-                    b.ToTable("usuario");
+                    b.ToTable("Usuario");
                 });
 
             modelBuilder.Entity("Finance_Manager_Icarus.Models.Banco", b =>
@@ -308,6 +374,28 @@ namespace Finance_Manager_Icarus.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("Finance_Manager_Icarus.Models.ItensMapeamento", b =>
+                {
+                    b.HasOne("Finance_Manager_Icarus.Models.Mapeamento", "Mapeamentos")
+                        .WithMany("ItensMapeamentos")
+                        .HasForeignKey("Mapeamento_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Mapeamentos");
+                });
+
+            modelBuilder.Entity("Finance_Manager_Icarus.Models.Mapeamento", b =>
+                {
+                    b.HasOne("Finance_Manager_Icarus.Models.Usuario", "Usuario")
+                        .WithMany("Mapeamentos")
+                        .HasForeignKey("Usuario_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("Finance_Manager_Icarus.Models.Movimentacao", b =>
                 {
                     b.HasOne("Finance_Manager_Icarus.Models.Banco", "Banco")
@@ -320,13 +408,13 @@ namespace Finance_Manager_Icarus.Migrations
 
                     b.HasOne("Finance_Manager_Icarus.Models.NomeMovimentacao", "NomeMovimentacao")
                         .WithMany("Movimentacoes")
-                        .HasForeignKey("Nome_movimentacao_Id")
+                        .HasForeignKey("Nome_Movimentacao_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Finance_Manager_Icarus.Models.TipoMovimentacao", "TipoMovimentacao")
                         .WithMany("Movimentacoes")
-                        .HasForeignKey("Tipo_movimentacao_Id")
+                        .HasForeignKey("Tipo_Movimentacao_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -384,6 +472,11 @@ namespace Finance_Manager_Icarus.Migrations
                     b.Navigation("NomeMovimentacoes");
                 });
 
+            modelBuilder.Entity("Finance_Manager_Icarus.Models.Mapeamento", b =>
+                {
+                    b.Navigation("ItensMapeamentos");
+                });
+
             modelBuilder.Entity("Finance_Manager_Icarus.Models.NomeMovimentacao", b =>
                 {
                     b.Navigation("Movimentacoes");
@@ -399,6 +492,8 @@ namespace Finance_Manager_Icarus.Migrations
                     b.Navigation("Bancos");
 
                     b.Navigation("Categorias");
+
+                    b.Navigation("Mapeamentos");
 
                     b.Navigation("NomeMovimentacoes");
 
